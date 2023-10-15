@@ -6,8 +6,8 @@ from faunadb.errors import NotFound
 from dotenv import load_dotenv
 import os
 load_dotenv()
+
+
 Token = os.getenv("token")
 
-def client():
-    client = FaunaClient(secret=Token,domain="db.eu.fauna.com")
-    return client
+client = FaunaClient(secret=Token,domain="db.eu.fauna.com")
