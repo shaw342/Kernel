@@ -1,23 +1,13 @@
-import os
-from faunadb.client import FaunaClient
+from faunadb import client as faunadb_client
 from faunadb.errors import FaunaError
 from faunadb import query as q
 from faunadb.client import FaunaClient
 from faunadb.errors import NotFound
+from dotenv import load_dotenv
+import os
+load_dotenv()
+Token = os.getenv("token")
 
-token = os.getenv("token")
-from faunadb import query as q
-from faunadb.objects import Ref
-from faunadb.client import FaunaClient
-
-# Initialize the FaunaDB client
-client = FaunaClient(secret=token)
-
-# Define the collection name
-collection_name = "my_collection"
-
-# Create a collection
-collection_ref = client.query(q.create_collection({"name": collection_name}))
-
-# Print the reference to the created collection
-print("Collection created: {}".format(collection_ref))
+def client():
+    client = FaunaClient(secret=Token,domain="db.eu.fauna.com")
+    return client
