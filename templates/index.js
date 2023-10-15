@@ -1,27 +1,29 @@
+document.getElementById("button")
+  .addEventListener("click", (event) => {
+    let elementMail = document.getElementById("email");
+    let elementUser = document.getElementById("username");
+    let elementPass = document.getElementById("password");
 
-let username = document.getElementById("username")
-let email = document.getElementById("email")
-let password = document.getElementById("password")
+    let valueMail = elementMail.value;
+    let valueUser = elementUser.value;
+    let valuePass = elementPass.value;
 
-let data = {
-    username:username,
-    email:email,
-    password:password,
-} 
+    let payload = {
+      "mail": valueMail,
+      "user": valueUser,
+      "pass": valuePass,
+    };
 
-url = "http://localhost:8000/logout"
-fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(data)
-  })
-  .then(response => response.json())
-  .then(data => {
-    console.log(data)
-    
-  })
-  .catch(error => {
-    console.error(error)
+    fetch('/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    })
+    .then(async (res) => {
+      let value = await res.json();
+      console.log("result->", value);
+    });
+
   });
