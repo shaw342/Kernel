@@ -9,16 +9,19 @@ class Model():
     def user_data(self, data: dict):
         query = fauna.fql("users.create(${data})", data=data)
         self.client.query(query)
-        # result =self.client.query(
-        #     q.create(q.collection("users"),{"data":data})
-        # )
-    
+
     def product_data(self,data):
         # result = self.client.query(
         #     q.create(q.collection("product"),{"data":data})
         # )
         pass
         
-    def verifiction(self,data):
-        query = fauna.fql("true")
-        self.client.query(query)
+    def verification(self, data: dict) -> bool:
+        query = fauna.fql("users.byMail(${mail}).nonEmpty()", mail=data['mail'])
+        result = self.client.query(query)
+        return not result.data
+    
+    def name_verification(self,data: dict)-> bool:
+        query = fauna.fql("users.byUser(${user}).nonEmpty()", user = data["user"])
+        result = self.client.query(query)
+        return not result.data
