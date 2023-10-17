@@ -32,8 +32,9 @@ async def logout(req):
 @app.route("/register",methods=["POST"])
 async def register(req: sanic.Request):
     data = req.json
+    condition = [Model.verification(data),Model.name_verification(data)]
     
-    if not MODEL.verification(data):
+    if not condition:
         return response.json({'error': 'among us exists'})
     
     MODEL.user_data(data)
