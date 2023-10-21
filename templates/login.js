@@ -26,4 +26,5 @@ document.getElementById("button-n-2").addEventListener("click",(event) =>{
         let value = await res.json()
         console.log("result", value);
     });
+    
 });

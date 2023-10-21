@@ -12,6 +12,8 @@ app = Sanic(__name__)
 CORS(app)
 jinja = SanicJinja2(app, enable_async=True)
 
+
+
 MODEL = Model()
 
 @app.route("/")
@@ -23,11 +25,18 @@ async def home(req):
 async def index_js(req):
     return await response.file("templates/index.js")
 
+@app.route("/image_home.jpg")
+async def image(req):
+    return await response.file("templates/img/image_home.jpg")
+
 @app.route("/signin",methods=["POST","GET"])
 async def signin(req):
     template = await jinja.render_async("signin.html",req)
     return response.html(template.body)
 
+@app.route("/style.css",methods=["GET","POST"])
+async def style(req):
+    return await response.file("templates/style.css")
 
 @app.route("/register",methods=["POST"])
 async def register(req: sanic.Request):
@@ -54,9 +63,11 @@ async def login_success(req: sanic.Request):
     data = req.json
     if MODEL.confirmation_login(data.get('mail'),data.get('user')):
         return response.json({"error":"among us not exist"})
-    print(data.get('user'))
-    print(data.get('mail'))
-    return response.json({"good":"success"})
+    template = await jinja.render_async("home.html",req)
+    return response.html(template)
+
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)
