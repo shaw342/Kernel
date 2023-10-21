@@ -6,12 +6,11 @@ from sanic_cors import CORS, cross_origin
 from sanic.response import text,html
 from sanic_ext import render
 from sanic_jinja2 import SanicJinja2
+from script import Model
+
 app = Sanic(__name__)
 CORS(app)
 jinja = SanicJinja2(app, enable_async=True)
-
-
-from script import Model
 
 MODEL = Model()
 
@@ -25,21 +24,39 @@ async def index_js(req):
     return await response.file("templates/index.js")
 
 @app.route("/signin",methods=["POST","GET"])
-async def logout(req):
+async def signin(req):
     template = await jinja.render_async("signin.html",req)
     return response.html(template.body)
+
 
 @app.route("/register",methods=["POST"])
 async def register(req: sanic.Request):
     data = req.json
-    condition = [Model.verification(data),Model.name_verification(data)]
     
-    if not condition:
+    if not MODEL.verification(data):
         return response.json({'error': 'among us exists'})
     
     MODEL.user_data(data)
-    
-    return response.json({'message': 'Received JSON data', 'data': data})
+    template =  await jinja.render_async("home.html",req)
+    return response.html(template.body)
+
+@app.route("/login.js")
+async def login_js(req):
+    return await response.file("templates/login.js")
+
+@app.route("/login",methods=["POST","GET"])
+async def login(req: sanic.Request):
+    template =  await jinja.render_async("login.html",req)
+    return response.html(template.body)
+
+@app.route("/success", methods=["POST"])
+async def login_success(req: sanic.Request):
+    data = req.json
+    if MODEL.confirmation_login(data.get('mail'),data.get('user')):
+        return response.json({"error":"among us not exist"})
+    print(data.get('user'))
+    print(data.get('mail'))
+    return response.json({"good":"success"})
 
 if __name__ == "__main__":
     app.run(debug=True)
