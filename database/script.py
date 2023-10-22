@@ -4,9 +4,6 @@ import fauna.client as fauna_client
 import smtplib
 import json
 
-
-from email.message import EmailMessage
-
 class Model():    
     def __init__(self) -> None:
         self.client = fauna_client.Client() # domain="db.eu.fauna.com"    
@@ -16,9 +13,6 @@ class Model():
         self.client.query(query)
 
     def product_data(self,data: dict):
-        # result = self.client.query(
-        #     q.create(q.collection("product"),{"data":data})
-        # )
         pass
         
     def verification(self, data: dict) -> bool:
@@ -37,4 +31,3 @@ class Model():
         result = self.client.query(query)
         return not any(result.data.values())
     
-        
