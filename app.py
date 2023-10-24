@@ -11,7 +11,7 @@ from script import Model
 app = Sanic(__name__)
 CORS(app)
 jinja = SanicJinja2(app, enable_async=True)
-
+app.static('/img/logo.png', './templates/img/logo.png')
 
 MODEL = Model()
 
@@ -25,9 +25,9 @@ async def index_js(req):
     return await response.file("templates/index.js")
 
 
-@app.route("/logo.png")
+@app.route("/",methods=["GET"],version=2)
 async def logo(req):
-    return await response.file("templates/img/logo.png")
+    return await response.file("logo.png")
 
 @app.route("/signin",methods=["POST","GET"])
 async def signin(req):
@@ -63,9 +63,16 @@ async def login_success(req: sanic.Request):
     data = req.json
     if MODEL.confirmation_login(data.get('mail'),data.get('user')):
         return response.json({"error":"among us not exist"})
-    template = await jinja.render_async("home.html",req)
-    return response.html(template)
+    return response.json({"success": "is success"})
 
+@app.route("/search.js")
+async def search(req):
+    return await response.file("templates/search.js")
+
+@app.route("/base",methods=["POST","GET"])
+async def base(req):
+    template = await jinja.render_async("base.html",req)
+    return response.html(template.body)
 
 if __name__ == "__main__":
     app.run(debug=True)
