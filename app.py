@@ -21,9 +21,9 @@ async def home(req):
     template = await jinja.render_async("home.html",req)
     return response.html(template.body)
 
-@app.route("/",methods=["GET"],version=3)
-async def video(req):
-    return await response.file("templates/video/linux.mp4")
+@app.route("/templates/video/linux.mp4",methods=["GET"],version=3)
+async def video(req, file):
+    return await response.file("./templates/video/" + file)
 
 @app.route("/index.js")
 async def index_js(req):
@@ -84,4 +84,4 @@ async def base(req):
     return response.html(template.body)
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=8001,debug=True)  # Lancer Sanic sur le port 8001
