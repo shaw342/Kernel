@@ -21,7 +21,7 @@ async def home(req):
     template = await jinja.render_async("home.html",req)
     return response.html(template.body)
 
-@app.route("/templates/video/linux.mp4",methods=["GET"],version=3)
+@app.route("/templates/video/<file>",methods=["GET"],version=3)
 async def video(req, file):
     return await response.file("./templates/video/" + file)
 
