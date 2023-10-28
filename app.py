@@ -13,12 +13,17 @@ CORS(app)
 jinja = SanicJinja2(app, enable_async=True)
 app.static('/img/logo.png', './templates/img/logo.png')
 
+
 MODEL = Model()
 
 @app.route("/")
 async def home(req):
     template = await jinja.render_async("home.html",req)
     return response.html(template.body)
+
+@app.route("/",methods=["GET"],version=3)
+async def video(req):
+    return await response.file("templates/video/linux.mp4")
 
 @app.route("/index.js")
 async def index_js(req):
@@ -37,6 +42,10 @@ async def signin(req):
 @app.route("/style.css",methods=["GET","POST"])
 async def style(req):
     return await response.file("templates/style.css")
+
+@app.route("/base.css",methods=["POST","GET"])
+async def base_css(req):
+    return await response.file("templates/base.css")
 
 @app.route("/register",methods=["POST"])
 async def register(req: sanic.Request):
