@@ -21,7 +21,7 @@ async def home(req):
     template = await jinja.render_async("home.html",req)
     return response.html(template.body)
 
-@app.route("/templates/video/<file>",methods=["GET"],version=3)
+@app.route("/templates/video/<file>")
 async def video(req, file):
     return await response.file("./templates/video/" + file)
 
@@ -46,6 +46,11 @@ async def style(req):
 @app.route("/base.css",methods=["POST","GET"])
 async def base_css(req):
     return await response.file("templates/base.css")
+
+@app.route("/style_signin.css",methods=["GET","POST"])
+async def style_base(req):
+    return await response.file("templates/style_signin.css")
+
 
 @app.route("/register",methods=["POST"])
 async def register(req: sanic.Request):
@@ -82,6 +87,12 @@ async def search(req):
 async def base(req):
     template = await jinja.render_async("base.html",req)
     return response.html(template.body)
+
+@app.route("/product")
+async def product(req):
+    template = await jinja.render_async("product.html",req)
+    return response.html(template.body)
+
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=8001,debug=True)  # Lancer Sanic sur le port 8001
