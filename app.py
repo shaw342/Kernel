@@ -54,15 +54,15 @@ async def style_base(req):
 
 @app.route("/register",methods=["POST"])
 async def register(req: sanic.Request):
-    data = req.json
+    global data1
+    data1 = req.json
     
-    if not MODEL.verification(data):
+    if not MODEL.verification(data1):
         return response.json({'error': 'among us exists'})
     
-    MODEL.user_data(data)
+    MODEL.user_data(data1)
     template =  await jinja.render_async("home.html",req)
     return response.html(template.body)
-
 @app.route("/login.js")
 async def login_js(req):
     return await response.file("templates/login.js")
@@ -93,6 +93,11 @@ async def product(req):
     template = await jinja.render_async("product.html",req)
     return response.html(template.body)
 
+@app.route("/Orders",methods=["POST"])
+async def Orders(req:sanic.Request):
+    data = req.json
+    MODEL.Order_data(data.get("name"),data.get("quantity"),data.get("os"),data.get("price"))
+    return response.json({"success":"is successe"})
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=8001,debug=True)  # Lancer Sanic sur le port 8001
+    app.run(host='0.0.0.0', port=8002,debug=True)  # Lancer Sanic sur le port 8001
