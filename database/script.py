@@ -11,9 +11,9 @@ class Model():
         
     def user_data(self, data: dict):
         self.data = data
-        query1 = fauna.fql("let customers Customers.create(${data})", data=data)
+        query1 = fauna.fql("Customers.create(${data})", data=data)
         result = self.client.query(query1)
-        return result
+        return result,self.data
         
     def verification(self, data: dict) -> bool:
         query = fauna.fql("Customers.byMail(${mail}).nonEmpty()", mail=data['mail'])
@@ -31,8 +31,12 @@ class Model():
         result = self.client.query(query)
         return not any(result.data.values())
     
-    def Order_data(self,data):
-        query = fauna.fql("Orders.create(${data})", data=data)
+    def Order_data(self,data) -> None:
+        newData ={
+            "user":self.data,
+            "order":data
+        }
+        print(newData)
+        query = fauna.fql("Orders.create(${data})",data=newData)
         self.client.query(query)
-        
     
