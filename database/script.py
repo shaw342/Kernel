@@ -6,11 +6,13 @@ import json
 
 class Model():    
     def __init__(self) -> None:
-        self.client = fauna_client.Client() # domain="db.eu.fauna.com"    
+        self.client = fauna_client.Client()# domain="db.eu.fauna.com"    
+        self.data = None
         
     def user_data(self, data: dict):
-        query = fauna.fql("let customers = Customers.create(${data})", data=data)
-        return self.client.query(query)
+        self.data = data
+        query1 = fauna.fql("Customers.create(${data})", data=data)
+        self.client.query(query1)
         
         
     def verification(self, data: dict) -> bool:
@@ -29,6 +31,9 @@ class Model():
         result = self.client.query(query)
         return not any(result.data.values())
     
-    def Order_data(self,data):
-        query = fauna.fql("Orders.create(${data})",data)
+    def Order_data(self,name,quantity,os,price):
+        print(self.data)
+        query = fauna.fql(f"Orders.create({{ name: '{name}', quantity: {quantity}, os: '{os}', price: {price}}})")
         self.client.query(query)
+        
+    
