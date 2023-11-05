@@ -4,22 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="./style_signin.css">
 </head>
 <body>
     <h2>Inscription</h2>
+    <video autoplay muted loop>
+        <source src="/templates/video/signin.mp4"> </source>
+    </video>
     <div>
-        <label for="username">Nom d'utilisateur :</label>
-        <input type="text" id="username" name="username" required><br><br>
+        <div id="error_message">
+            <h3>length of username: minimum 6 </h3>
+            <h3>length of password: minimum 6 </h3>
+            <h3>length of email: minimum 6 </h3>
+        </div>
+        <div id="containe">
+            <label for="username">Nom d'utilisateur :</label>
+            <input type="text" id="username" name="username" required><br><br>
 
-        <label for="email">Email :</label><br>
-        <input type="email" id="email" name="email" required><br><br>
+            <label for="email">Email :</label><br>
+            <input type="email" id="email" name="email" required><br><br>
 
-        <label for="password">Mot de passe :</label><br>
-        <input type="password" id="password" name="password" required><br><br>
+            <label for="password">Mot de passe :</label><br>
+            <input type="password" id="password" name="password" required><br><br>
 
-        <label for="password_verification"> confirmation</label>
+            <label for="password_verification"> confirmation</label>
         
-        <input type="submit" value="S'inscrire" id="button">
+            <input type="submit" value="S'inscrire" id="button">
+        </div>
     </div>
     <script src="./index.js"></script>
 </body>

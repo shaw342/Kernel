@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="base.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <nav>
+        <img src="./img/logo.png" alt="logo" width="100px" height="100px">
+        <ul>
+            <li><a href="#">home</a></li>
+            <li><a href="#"></a>about</li>
+            <li><a href="#">product</a></li>
+            <li></li>
+        </ul>
+
+        <div id="icon">
+       <a href="http://127.0.0.1:8001/product" id="panier"> <i class="fas fa-shopping-cart"></i></a>
+       <a href="#"><i class="fas fa-user" id="user_icon"></i></a>
+       </div>
+    </nav>
+    <div id="search-bar">
+        <input type="texte" placeholder="search" id="search-text">
+        <input type="button" value="submit" id="search">
+    </div>
+    <div id="containe">
+        <h1 id="fail"></h1>
+        <div class="box" id="acer">
+            <h1 class="name">acer</h1>
+            <h2 class="os">ubuntu linux</h1>
+            <h3 class="price">400</h3>
+            <input type="button" value="mettre au panier" id="add_basket">
+        </div>
+        <div class="box" id="dell">
+            <h1 class="name">dell</h1>
+            <h2 class="os">ubuntu linux</h1>
+            <h3 class="price">600$</h3>
+        </div>
+        <div class="box" id="chromebook">
+            <h1 class="name">chromebook</h1>
+            <h2 class="os">arch linux</h1>
+            <h3 class="price">700$</h3>
+        </div>
+        <div class="box" id="hp">
+            <h1 class="name">hp</h1>
+            <h2 class="os">debian linux</h1>
+            <h3 class="price">750$</h3>
+        </div>
+    </div>
+
+    <script src="./search.js"> </script>
+</body>
+</html>
