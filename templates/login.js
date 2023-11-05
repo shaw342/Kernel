@@ -6,6 +6,7 @@ document.getElementById("button-n-2").addEventListener("click",(event) =>{
     let valuePass = password.value;
     let valueUser = username.value;
     let valueMail = email.value;
+    event.preventDefault();
     console.log(valueMail);
     console.log(valueUser);
     console.log(valuePass);
@@ -21,10 +22,12 @@ document.getElementById("button-n-2").addEventListener("click",(event) =>{
             "Content-Type": "application/json",
         },
         body:JSON.stringify(playload),
-    })
+    }
+    )
     .then(async (res) =>{
         let value = await res.json()
         console.log("result", value);
+        window.location.href = "/base"
     });
     
 });
