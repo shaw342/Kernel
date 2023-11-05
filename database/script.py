@@ -1,8 +1,6 @@
 import os
 import fauna
 import fauna.client as fauna_client
-import smtplib
-import json
 
 class Model():    
     def __init__(self) -> None:
