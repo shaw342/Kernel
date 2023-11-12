@@ -19,3 +19,5 @@ document.getElementById("button_address").addEventListener("click",(event)=>{
         let value = await res.json();
     })
 })
+
+fetch("")
