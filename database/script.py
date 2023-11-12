@@ -46,11 +46,23 @@ class Model():
         result = self.client.query(query)
         return result.data["token"]
     
-    def get_id_by_username(self, username) ->str:
+    def get_id_by_username(self, username) -> str:
         query = fauna.fql("Customers.byUser(${username}).first()", username=username)
         result = self.client.query(query)
         return result.data["customers_id"]
     
+    def get_id_by_token(self, token) -> str:
+        query = fauna.fql("Session.byToken(${token}).first()", token=token)
+        result = self.client.query(query)
+        return result.data["customers_id"]
+    
+    def get_customers_bycustomers_id(self, customers_id) -> str:
+        query = fauna.faql("Customers.by(${customers_id})", customers_id = customers_id)
+        result = self.client.query(query)
+        return result.data
+    
+    
+
     """def get_user_id(self):
         query = fauna.fql("Customers.", token=token)
         result = self.client.query(query)
