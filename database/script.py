@@ -56,13 +56,32 @@ class Model():
         result = self.client.query(query)
         return result.data["customers_id"]
     
-    def get_customers_bycustomers_id(self, customers_id) -> str:
-        query = fauna.faql("Customers.by(${customers_id})", customers_id = customers_id)
+    def get_customers_bycustomers_id(self, customers_id) -> dict:
+        query = fauna.fql("Customers.byCustomers_id(${customers_id}).first()", customers_id=customers_id)
         result = self.client.query(query)
-        return result.data
+        result2 = {
+            "user":str(result.data["user"]),
+            "mail":str(result.data["mail"])
+        }
+        return result2
+    
+    def get_order_by_customers_id(self, customers_id) -> dict:
+        query = fauna.fql("Orders.byCustomers_id(${customers_id}).all", customers_id=customers_id)
+        result = self.client.query(query)
+        result_final = {
+            "name": str(result.data["name"]),
+            "price": float(result.data["price"]),
+            "quantity": int(result.data["quantity"]),
+            "img": result.data["img"]
+         }
+        return result_final
+    
+    """def verification_quantity(self, customers_id):
+        query = fauna.fql("Orders.byCustomers_id({customers_id}).map(.quantity).last()", customers_id=customers_id)
+        
+        return quantity"""
     
     
-
     """def get_user_id(self):
         query = fauna.fql("Customers.", token=token)
         result = self.client.query(query)
