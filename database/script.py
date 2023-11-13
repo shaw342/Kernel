@@ -6,7 +6,8 @@ import json
 from uuid import uuid4
 
 
-class Model():    
+class Model():
+        
     def __init__(self) -> None:
         self.client = fauna_client.Client()# domain="db.eu.fauna.com"    
     
@@ -66,15 +67,13 @@ class Model():
         return result2
     
     def get_order_by_customers_id(self, customers_id) -> dict:
-        query = fauna.fql("Orders.byCustomers_id(${customers_id}).all", customers_id=customers_id)
+        bucket = {}
+        query = fauna.fql("Orders.byCustomers_id(${customers_id}).order(){name,os,price,quantity,img}", customers_id=customers_id)
         result = self.client.query(query)
-        result_final = {
-            "name": str(result.data["name"]),
-            "price": float(result.data["price"]),
-            "quantity": int(result.data["quantity"]),
-            "img": result.data["img"]
-         }
-        return result_final
+        for i in result.data:
+            bucket.update(i)
+
+        return bucket
     
     """def verification_quantity(self, customers_id):
         query = fauna.fql("Orders.byCustomers_id({customers_id}).map(.quantity).last()", customers_id=customers_id)
